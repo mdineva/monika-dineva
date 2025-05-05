@@ -17,7 +17,6 @@ This project provides automated tests for CRUD operations on the USER endpoint o
 - **Maven** (3.6.3 or higher)
 - **Docker** (for local API setup)
 - **Allure** (for reporting)
-- **Git** (for cloning the repository)
 - **An IDE** (e.g., IntelliJ IDEA, Eclipse) is recommended
 
 ### Verify installations:
@@ -31,21 +30,18 @@ allure --version
 
 ## ⚙️ Setup Instructions
 
-1. **Clone the repository**
-<pre> git clone https://github.com/your-repo/petstore-automation.git cd petstore-automation </pre>
-
-2. **Set up Petstore API locally using Docker**
+1. **Set up Petstore API locally using Docker**
 <pre> docker pull swaggerapi/petstore3:unstable
  docker run  --name swaggerapi-petstore3 -d -p 8080:8080 swaggerapi/petstore3:unstable </pre>
 - Validate the container is running: <pre> docker ps </pre>
 - Stop or restart the container if needed: <pre>docker stop swaggerapi-petstore3 
 docker restart swaggerapi-petstore3 </pre>
 
-3. **Install dependencies**
+2. **Install dependencies**
    Ensure Maven and Java 17 are installed, then build the project:
    <pre> mvn clean install </pre>
 
-4. Install Allure (if not installed)
+3. Install Allure (if not installed)
    Allure CLI is required for allure serve or allure generate. Install it based on your OS:
    - macOS <pre> brew install allure </pre>
    - Windows: Download from Allure Releases and add to PATH. 

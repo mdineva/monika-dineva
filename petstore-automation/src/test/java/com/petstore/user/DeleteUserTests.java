@@ -2,12 +2,12 @@ package com.petstore.user;
 
 import com.petstore.BaseTest;
 import com.petstore.model.User;
-import com.petstore.pages.UserPage;
+import com.petstore.services.UserService;
 import io.qameta.allure.Description;
 import org.testng.annotations.Test;
 
 public class DeleteUserTests extends BaseTest {
-    private final UserPage userPage = new UserPage();
+    private final UserService userService = new UserService();
     private String createdUsername;
     private static final int USER_ID = 12345;
     public static final String USERNAME = "User";
@@ -25,10 +25,10 @@ public class DeleteUserTests extends BaseTest {
     public void deleteExistingUSer() {
         User user = createDefaultUser();
         createdUsername = user.getUsername();
-        userPage.createUser(user)
+        userService.createUser(user)
                 .then().statusCode(200);
 
-        userPage.deleteUser(createdUsername)
+        userService.deleteUser(createdUsername)
                 .then()
                 .statusCode(200);
 
@@ -37,7 +37,7 @@ public class DeleteUserTests extends BaseTest {
     @Description("When deleting non existing user, a 404 User not found error msg is returned")
     @Test
     public void deleteNonExistingUser() {
-        userPage.deleteUser(System.currentTimeMillis() + "Random")
+        userService.deleteUser(System.currentTimeMillis() + "Random")
                 .then()
                 .statusCode(404)
                 .onFailMessage(USER_NOT_FOUND);
@@ -46,7 +46,7 @@ public class DeleteUserTests extends BaseTest {
     @Description("When deleting user with invalid username, a 400 Invalid username supplied error msg is returned")
     @Test
     public void deleteUserWithInvalidUsername() {
-        userPage.deleteUser(System.currentTimeMillis())
+        userService.deleteUser(System.currentTimeMillis())
                 .then()
                 .statusCode(400)
                 .onFailMessage(INVALID_USERNAME_SUPPLIED);

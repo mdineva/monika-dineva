@@ -2,7 +2,7 @@ package com.petstore.user;
 
 import com.petstore.BaseTest;
 import com.petstore.model.User;
-import com.petstore.pages.UserPage;
+import com.petstore.services.UserService;
 import io.qameta.allure.Description;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
@@ -22,7 +22,7 @@ public class CreateUserTests extends BaseTest {
     public static final String PHONE = "078123456";
     public static final int USER_STATUS = 1;
     public static final String BAD_REQUEST = "Bad Request";
-    private final UserPage userPage = new UserPage();
+    private final UserService userService = new UserService();
     private String createdUsername;
 
     @Description("Test for creating a new user with valid input")
@@ -38,7 +38,7 @@ public class CreateUserTests extends BaseTest {
         user.setPhone(PHONE);
         user.setUserStatus(USER_STATUS);
         createdUsername = user.getUsername();
-        userPage.createUser(user)
+        userService.createUser(user)
                 .then().statusCode(200)
                 .body("id", equalTo(user.getId()))
                 .body("username", equalTo(user.getUsername()))
@@ -47,7 +47,7 @@ public class CreateUserTests extends BaseTest {
                 .body("phone", equalTo(user.getPhone()))
                 .body("userStatus", equalTo(user.getUserStatus()));
 
-        userPage.getUserByUsername(createdUsername)
+        userService.getUserByUsername(createdUsername)
                 .then()
                 .body("id", equalTo(user.getId()))
                 .body("username", equalTo(user.getUsername()))
@@ -57,7 +57,7 @@ public class CreateUserTests extends BaseTest {
                 .body("userStatus", equalTo(user.getUserStatus()))
                 .statusCode(200);
 
-        userPage.logInUser(createdUsername, user.getPassword())
+        userService.logInUser(createdUsername, user.getPassword())
                 .then()
                 .statusCode(200);
 
@@ -68,7 +68,7 @@ public class CreateUserTests extends BaseTest {
 //    @Test
 //    public void createUserWithoutValues() {
 //        User user = new User();
-//        userPage.createUser(user)
+//        userService.createUser(user)
 //                .then()
 //                .statusCode(400)
 //                .onFailMessage(BAD_REQUEST);;
@@ -78,7 +78,7 @@ public class CreateUserTests extends BaseTest {
     @AfterMethod
     public void cleanupUser() {
         if (createdUsername != null) {
-            userPage.deleteUser(createdUsername).then().statusCode(200);
+            userService.deleteUser(createdUsername).then().statusCode(200);
             createdUsername = null;
         }
     }

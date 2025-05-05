@@ -1,4 +1,4 @@
-package com.petstore.pages;
+package com.petstore.services;
 
 import com.petstore.model.User;
 import io.restassured.http.ContentType;
@@ -6,7 +6,7 @@ import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 
-public class UserPage {
+public class UserService {
 
     private final String USER_ENDPOINT = "/user";
     private final String LOGIN = USER_ENDPOINT + "/login";

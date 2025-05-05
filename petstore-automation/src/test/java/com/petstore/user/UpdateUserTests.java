@@ -2,7 +2,7 @@ package com.petstore.user;
 
 import com.petstore.BaseTest;
 import com.petstore.model.User;
-import com.petstore.pages.UserPage;
+import com.petstore.services.UserService;
 import io.qameta.allure.Description;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class UpdateUserTests extends BaseTest {
 
-    private final UserPage userPage = new UserPage();
+    private final UserService userService = new UserService();
     private User defaultUser;
     private String originalUsername;
     private String updatedUsername;
@@ -33,7 +33,7 @@ public class UpdateUserTests extends BaseTest {
     public void setUpUser() {
         defaultUser = createDefaultUser();
         originalUsername = defaultUser.getUsername();
-        userPage.createUser(defaultUser)
+        userService.createUser(defaultUser)
                 .then()
                 .statusCode(200);
     }
@@ -51,7 +51,7 @@ public class UpdateUserTests extends BaseTest {
         updatedUser.setPhone(PHONE + 1);
         updatedUser.setUserStatus(2);
 
-        userPage.updateUser(defaultUser.getUsername(), updatedUser)
+        userService.updateUser(defaultUser.getUsername(), updatedUser)
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(updatedUser.getId()))
@@ -61,7 +61,7 @@ public class UpdateUserTests extends BaseTest {
                 .body("phone", equalTo(updatedUser.getPhone()))
                 .body("userStatus", equalTo(updatedUser.getUserStatus()));
 
-        userPage.logInUser(updatedUser.getUsername(), updatedUser.getPassword())
+        userService.logInUser(updatedUser.getUsername(), updatedUser.getPassword())
                 .then()
                 .statusCode(200);
     }
@@ -72,7 +72,7 @@ public class UpdateUserTests extends BaseTest {
 //    @Test
 //    public void updateUsersWithEmptyBody() {
 //        User updatedUser = new User();
-//        userPage.updateUser(originalUsername, updatedUser)
+//        userService.updateUser(originalUsername, updatedUser)
 //                .then()
 //                .statusCode(400)
 //                .onFailMessage(BAD_REQUEST);
@@ -81,7 +81,7 @@ public class UpdateUserTests extends BaseTest {
     @Description("When updating non-existing user, 404 User not found error msg is returned")
     @Test
     public void updateNonExistingUser() {
-        userPage.updateUser(originalUsername + "Test", defaultUser)
+        userService.updateUser(originalUsername + "Test", defaultUser)
                 .then()
                 .statusCode(404)
                 .onFailMessage(USER_NOT_FOUND);
@@ -103,7 +103,7 @@ public class UpdateUserTests extends BaseTest {
     @AfterMethod
     private void cleanUpUser() {
         if (originalUsername != null) {
-            userPage.deleteUser(originalUsername)
+            userService.deleteUser(originalUsername)
                     .then()
                     .statusCode(200);
         }

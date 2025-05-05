@@ -1,8 +1,7 @@
-package com.monefy.base;
+package com.monefy;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.*;
 
 import java.net.MalformedURLException;
@@ -26,8 +25,8 @@ public class BaseTest {
     }
 
     @AfterClass
-    public void tearDown(){
-        if(driver != null) {
+    public void tearDown() {
+        if (driver != null) {
             driver.quit();
         }
     }
