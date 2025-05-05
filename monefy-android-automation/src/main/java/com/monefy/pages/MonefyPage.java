@@ -16,7 +16,6 @@ import static java.lang.Double.parseDouble;
 public class MonefyPage {
     private AndroidDriver driver;
     private WebDriverWait wait;
-
     private final By currentBalance = By.id("locator_current_balance");
     private final By addExpenseButton = By.id("locator_add_expense_button");
     private final By addIncomeButton = By.id("locator_add_income_button");
