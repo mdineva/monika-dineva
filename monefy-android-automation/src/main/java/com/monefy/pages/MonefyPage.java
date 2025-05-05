@@ -91,7 +91,7 @@ public class MonefyPage {
         if (isElementPresent(includeInBalanceToggle)) {
             WebElement toggle = wait.until(ExpectedConditions.visibilityOfElementLocated(includeInBalanceToggle));
             boolean isToggled = toggle.getAttribute("checked") != null && toggle.getAttribute("checked").equals("true");
-            if (!isToggled) { // Enable the toggle if not already enabled
+            if (!isToggled) {
                 toggle.click();
             }
         }
