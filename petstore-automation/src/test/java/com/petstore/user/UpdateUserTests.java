@@ -15,7 +15,6 @@ public class UpdateUserTests extends BaseTest {
     private final UserService userService = new UserService();
     private User defaultUser;
     private String originalUsername;
-    private String updatedUsername;
     private static final int USER_ID = 12345;
     public static final String USERNAME = "Username";
     public static final String FIRSTNAME = "Name";
