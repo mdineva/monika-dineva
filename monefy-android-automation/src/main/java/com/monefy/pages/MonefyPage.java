@@ -17,7 +17,6 @@ public class MonefyPage {
     private AndroidDriver driver;
     private WebDriverWait wait;
 
-    // Locators for Monefy app UI elements
     private final By currentBalance = By.id("locator_current_balance");
     private final By addExpenseButton = By.id("locator_add_expense_button");
     private final By addIncomeButton = By.id("locator_add_income_button");
@@ -67,7 +66,6 @@ public class MonefyPage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(incomeAmountField)).sendKeys(amount);
     }
 
-    // Set the expense category
     public void setExpenseCategory(String category) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(expenseCategoryField)).sendKeys(category);
     }
@@ -75,11 +73,6 @@ public class MonefyPage {
     public void setIncomeCategory(String category) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(incomeCategoryField)).sendKeys(category);
     }
-//
-//    // Save the expense
-//    public void saveExpense() {
-//        wait.until(ExpectedConditions.elementToBeClickable(saveExpenseButton)).click();
-//    }
 
     public boolean isAccountExists(String accountName) {
         By accountLocator = By.xpath("//*[@text='" + accountName + "']");
@@ -91,12 +84,10 @@ public class MonefyPage {
         wait.until(ExpectedConditions.elementToBeClickable(addAccountButton)).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(accountNameField)).sendKeys(accountName);
 
-        // Set initial balance if provided
         if (balance != null) {
             wait.until(ExpectedConditions.visibilityOfElementLocated(accountBalanceField)).sendKeys(balance.toString());
         }
 
-        // Toggle "Include in Balance" if the element exists
         if (isElementPresent(includeInBalanceToggle)) {
             WebElement toggle = wait.until(ExpectedConditions.visibilityOfElementLocated(includeInBalanceToggle));
             boolean isToggled = toggle.getAttribute("checked") != null && toggle.getAttribute("checked").equals("true");
@@ -105,7 +96,6 @@ public class MonefyPage {
             }
         }
 
-        // Set initial balance date if provided
         if (date != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
             String dateString = dateFormat.format(date);
